@@ -1,6 +1,6 @@
 # Crash Time 2 - Unleashed Trainer 🧡
 
-Welcome to the **Crash Time 2 - Unleashed Trainer**! This project is a feature-rich trainer designed to enhance your gameplay experience in **Crash Time 2**. Built with love and powered by modern .NET technologies, this trainer provides tools like NoClip, Teleportation, and more to give you full control over the game. 🎮✨
+Welcome to the **Crash Time 2 - Unleashed Trainer**! This project is a feature-rich trainer designed to enhance your gameplay experience in **Crash Time 2**. This trainer provides tools like NoClip, Teleportation, and more to give you full control over the game. ✨
 
 ---
 
@@ -8,9 +8,10 @@ Welcome to the **Crash Time 2 - Unleashed Trainer**! This project is a feature-r
 
 - **NoClip Mode**: Fly through the game world with adjustable speed.
 - **Teleportation**: Instantly move to any coordinates in the game.
+- **Infinite Nitro**: Gives your car infinite nitro.
 - **Statistics Editor**: Modify in-game stats like property damage.
+- **GodMode** (Experimental): Makes your vehicle not able to be completely destroyed.
 - **Debug Tools**: View player coordinates and rotations in real-time.
-- **Customizable GUI**: A sleek and modern interface styled with ImGui.
 
 ---
 
@@ -29,9 +30,10 @@ Welcome to the **Crash Time 2 - Unleashed Trainer**! This project is a feature-r
 
 ## Usage Guide 📖
 
-1. Launch the trainer **after starting the game**.
-2. Use the `Insert` key to toggle the GUI on/off.
-3. Explore the tabs:
+1. Launch the trainer **after starting the game**
+2. Set your game into Windowed (16:9) so the ImGUI is visible
+3. Use the `Insert` key to toggle the GUI on/off.
+4. Explore the tabs:
    - **NoClip**: Enable/disable NoClip and adjust speed.
    - **Teleportation**: Enter X, Y, Z coordinates and teleport to any location.
    - **Statistics**: Modify profile statistics.
