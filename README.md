@@ -1,12 +1,12 @@
 # Crash Time 2 - Unleashed Trainer 🧡
 
-Welcome to the **Crash Time 2 - Unleashed Trainer**! This project is a feature-rich trainer designed to enhance your gameplay experience in **Crash Time 2**. This trainer provides tools like NoClip, Teleportation, and more to give you full control over the game. ✨
+Welcome to the **Crash Time 2 - Unleashed Trainer**! This project is an experimental but hopefully soon feature-rich trainer designed to enhance your gameplay experience in **Crash Time 2**. This trainer provides tools like NoClip, Teleportation, and more to give you full control over the game. ✨
 
 ---
 
 ## Features 🛠️
 
-- **NoClip Mode**: Fly through the game world with adjustable speed.
+- **NoClip**: Fly through the game world with adjustable speed.
 - **Teleportation**: Instantly move to any coordinates in the game.
 - **Infinite Nitro**: Gives your car infinite nitro.
 - **Statistics Editor**: Modify in-game stats like property damage.
