@@ -25,6 +25,8 @@ namespace CrashTimeUnleashed
         private bool initialized = false;
 
         private NoClip? _noClip;
+        private GodMode? _godMode;
+        private InfiniteNitro? _infiniteNitro;
         private Player? _player;
 
         private Memory? _memory;
@@ -47,6 +49,8 @@ namespace CrashTimeUnleashed
             if (_player != null)
             {
                 _noClip = new NoClip(_player);
+                _godMode = new GodMode(_player);
+                _infiniteNitro = new InfiniteNitro(_player);
             }
         }
 
@@ -92,6 +96,22 @@ namespace CrashTimeUnleashed
             }
             prevInsertState = isInsertPressed;
 
+            // Update modules
+            if (_noClip != null)
+            {
+                _noClip.Update();
+            }
+
+            if (_godMode != null)
+            {
+                _godMode.Update();
+            }
+            
+            if (_infiniteNitro != null)
+            {
+                _infiniteNitro.Update();
+            }
+
             if (!showGUI)
                 return;
 
@@ -99,7 +119,7 @@ namespace CrashTimeUnleashed
 
             if (ImGui.BeginTabBar("MyTabBar"))
             {
-                // Tab 1
+                // Tab - NoClip
                 if (ImGui.BeginTabItem("NoClip"))
                 {
                     ImGui.Spacing();
@@ -124,16 +144,44 @@ namespace CrashTimeUnleashed
                 if (ImGui.BeginTabItem("GodMode"))
                 {
                     ImGui.Spacing();
-                    ImGui.Text("GodMode");
+                    ImGui.Text("GodMode [!] Experimental [!]");
+                    if (_godMode != null)
+                    {
+                        bool enabled = _godMode.Enabled;
+                        if (ImGui.Checkbox("Enabled", ref enabled))
+                        {
+                            _godMode.Enabled = enabled;
+                        }
+                        
+                        ImGui.Spacing();
+
+                        ImGui.Text("GodMode is an experimental feature,");
+                        ImGui.Text("it might not work properly or cause your game to crash!");
+                    }
+                    ImGui.EndTabItem();
+                }
+                
+                // Tab - Nitro
+                if (ImGui.BeginTabItem("Nitro"))
+                {
                     ImGui.Spacing();
-                    ImGui.Text("Currently work in progress.");
-                    ImGui.Text("Check back on the GitHub!");
+                    if (_infiniteNitro != null)
+                    {
+                        ImGui.Text("Infinite Nitro");
+                        
+                        bool enabled = _infiniteNitro.Enabled;
+                        if (ImGui.Checkbox("Enabled", ref enabled))
+                        {
+                            _infiniteNitro.Enabled = enabled;
+                        }
+                    }
                     ImGui.EndTabItem();
                 }
 
-                // Tab 2
+                // Tab - Teleportation
                 if (ImGui.BeginTabItem("Teleportation"))
                 {
+                    ImGui.Text("Set coordinates");
                     ImGui.InputInt("Coord X", ref _xCoord);
                     ImGui.InputInt("Coord Y", ref _yCoord);
                     ImGui.InputInt("Coord Z", ref _zCoord);
@@ -147,10 +195,56 @@ namespace CrashTimeUnleashed
                             _player.WriteFloat(_player.zAddr, _zCoord);
                         }
                     }
+
+                    ImGui.Spacing();
+                    ImGui.Text("Predefined Locations:");
+
+                    // Autobahn category
+                    if (ImGui.CollapsingHeader("Autobahn"))
+                    {
+                        if (ImGui.Button("Unfinished Building (Roof)"))
+                        {
+                            if (_player != null)
+                            {
+                                _player.WriteFloat(_player.xAddr, -811.89f);
+                                _player.WriteFloat(_player.yAddr, 114.00f);
+                                _player.WriteFloat(_player.zAddr, -569.51f);
+                            }
+                        }
+
+                        // If you wish to contribute some location for Autobahn then please insert it here! <3
+                    }
+
+                    // City category
+                    if (ImGui.CollapsingHeader("City"))
+                    {
+                        if (ImGui.Button("Northwest Factory (MadCop Part 1)"))
+                        {
+                            if (_player != null)
+                            {
+                                _player.WriteFloat(_player.xAddr, -916.72f);
+                                _player.WriteFloat(_player.yAddr, 49.00f);
+                                _player.WriteFloat(_player.zAddr, 660.16f);
+                            }
+                        }
+
+                        if (ImGui.Button("Northwest Factory (MadCop Part 2)"))
+                        {
+                            if (_player != null)
+                            {
+                                _player.WriteFloat(_player.xAddr, -1156.61f);
+                                _player.WriteFloat(_player.yAddr, 32.00f);
+                                _player.WriteFloat(_player.zAddr, 502.70f);
+                            }
+                        }
+
+                        // If you wish to contribute some location for City then please insert it here! <3
+                    }
+
                     ImGui.EndTabItem();
                 }
 
-                // Tab 3
+                // Tab - Statistics
                 if (ImGui.BeginTabItem("Statistics"))
                 {
                     ImGui.Text("Profile Statistics");
@@ -166,6 +260,7 @@ namespace CrashTimeUnleashed
                     ImGui.EndTabItem();
                 }
 
+                // Tab - Debug
                 if (ImGui.BeginTabItem("Debug"))
                 {
                     if (_player != null)
@@ -176,6 +271,7 @@ namespace CrashTimeUnleashed
                         float xRot = _player.ReadFloat(_player.xRotAddr);
                         float yRot = _player.ReadFloat(_player.yRotAddr);
                         float zRot = _player.ReadFloat(_player.zRotAddr);
+                        float carIndex = _player.ReadInt(_player.carIndexAddr);
 
                         ImGui.Text("Coordinates:");
                         ImGui.Text($"X: {x:F2}");
@@ -189,6 +285,10 @@ namespace CrashTimeUnleashed
                         ImGui.Text($"Y Rotation (Pitch): {yRot:F2}");
                         ImGui.Text($"Z Rotation (Roll): {zRot:F2}");
 
+                        ImGui.Spacing();
+
+                        ImGui.Text($"Car Index: {carIndex}");
+
                         ImGui.NewLine();
 
                         ImGui.Text("This is a very early version of the trainer.");
@@ -201,16 +301,6 @@ namespace CrashTimeUnleashed
 
             ImGui.EndTabBar();
             ImGui.End();
-
-            if (_noClip != null)
-            {
-                _noClip.Update();
-            }
-
-            //if (_godMode != null)
-            //{
-            //    _godMode.Update();
-            //}
         }
 
         public void SetupWindowStyle()

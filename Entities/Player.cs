@@ -12,6 +12,8 @@ namespace CrashTimeUnleashed.Entities
         public IntPtr yRotAddr;
         public IntPtr zRotAddr;
 
+        public IntPtr carIndexAddr;
+
         private IntPtr _moduleBase;
         private Swed _swed;
 
@@ -26,6 +28,11 @@ namespace CrashTimeUnleashed.Entities
             return _moduleBase;
         }
 
+        public IntPtr GetProcessHandle()
+        {
+            return _swed.GetProcess().Handle;
+        }
+
         public void LoadAddresses()
         {
             xAddr = _moduleBase + 0x5BFBB8;
@@ -35,6 +42,8 @@ namespace CrashTimeUnleashed.Entities
             xRotAddr = _moduleBase + 0x5BFBC4;
             yRotAddr = _moduleBase + 0x5BFBC8;
             zRotAddr = _moduleBase + 0x5BFBCC;
+
+            carIndexAddr = _moduleBase + 0x34BF8C;
         }
 
         public float ReadFloat(IntPtr address)
@@ -55,6 +64,11 @@ namespace CrashTimeUnleashed.Entities
         public void WriteBytes(IntPtr address, byte[] bytes)
         {
             _swed.WriteBytes(address, bytes);
+        }
+
+        public int ReadInt(IntPtr address)
+        {
+            return _swed.ReadInt(address);
         }
     }
 }

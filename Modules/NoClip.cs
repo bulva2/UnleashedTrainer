@@ -9,6 +9,7 @@ namespace CrashTimeUnleashed.Modules
         static extern short GetAsyncKeyState(int vKey);
 
         private float _speed;
+        private bool _prevDeleteState = false;
 
         public NoClip(Player player) : base(player)
         {
@@ -27,6 +28,13 @@ namespace CrashTimeUnleashed.Modules
 
         public override void Update()
         {
+            bool isDeletePressed = (GetAsyncKeyState(0x2E) & 0x8000) != 0; // DELETE (To-do: Make it configurable)
+            if (isDeletePressed && !_prevDeleteState)
+            {
+                Enabled = !Enabled;
+            }
+            _prevDeleteState = isDeletePressed;
+
             if (!Enabled) return;
 
             float x = _player.ReadFloat(_player.xAddr);
